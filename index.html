@@ -53,15 +53,8 @@
   .exp-item {
     border-bottom: 0.5px solid var(--border);
     padding: 1.5rem 0;
-    transition: opacity 0.4s ease;
-    opacity: 0.35;
   }
   .exp-item:last-child { border-bottom: none; }
-  .exp-item.active { opacity: 1; }
-  /* On desktop, always show full opacity — effect is for mobile scroll feel */
-  @media (min-width: 900px) {
-    .exp-item { opacity: 1; }
-  }
   .exp-meta { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.9rem; }
   .exp-left { flex: 1; min-width: 0; }
   .exp-role { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
@@ -530,32 +523,7 @@
     if (el) { el.scrollIntoView({ behavior: 'smooth' }); }
   }
 
-  // Scroll-highlight for experience items (mobile/tablet only)
-  function initScrollHighlight() {
-    if (window.innerWidth >= 900) return;
-    var items = document.querySelectorAll('.exp-item');
-    if (!items.length) return;
-
-    // Set first item active on load
-    items[0].classList.add('active');
-
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          items.forEach(function(i) { i.classList.remove('active'); });
-          entry.target.classList.add('active');
-        }
-      });
-    }, {
-      root: null,
-      rootMargin: '-25% 0px -50% 0px',
-      threshold: 0
-    });
-
-    items.forEach(function(item) { observer.observe(item); });
-  }
-
-  // Personal Builds toggle
+    // Personal Builds toggle
   function toggleBuilds(header) {
     var body = header.nextElementSibling.nextElementSibling;
     var toggle = header.querySelector('.builds-toggle');
@@ -564,13 +532,7 @@
     toggle.textContent = isOpen ? '+' : '–';
   }
 
-  document.addEventListener('DOMContentLoaded', initScrollHighlight);
-  window.addEventListener('resize', function() {
-    var items = document.querySelectorAll('.exp-item');
-    if (window.innerWidth >= 900) {
-      items.forEach(function(i) { i.style.opacity = '1'; });
-    }
-  });
+
 </script>
 </body>
 </html>
