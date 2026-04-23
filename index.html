@@ -27,8 +27,6 @@
   .nav-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
   .nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; cursor: pointer; transition: color 0.2s; white-space: nowrap; }
   .nav-links a:hover { color: var(--teal); }
-
-  /* On desktop, go back to side-by-side */
   @media (min-width: 600px) {
     .nav { flex-direction: row; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem 0 2rem; margin-bottom: 3.5rem; }
   }
@@ -50,25 +48,33 @@
   .section-label { font-size: 11px; letter-spacing: 0.1em; color: var(--terra); text-transform: uppercase; margin-bottom: 0.4rem; font-weight: 500; }
   .section-title { font-size: 22px; font-weight: 500; margin-bottom: 1.75rem; color: var(--text); }
 
-  /* EXPERIENCE */
-  .exp-item { border-bottom: 0.5px solid var(--border); }
+  /* EXPERIENCE — scroll highlight */
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    border-bottom: 0.5px solid var(--border);
+    padding: 1.5rem 0;
+    transition: opacity 0.4s ease;
+    opacity: 0.35;
+  }
   .exp-item:last-child { border-bottom: none; }
-  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; padding: 1.1rem 0; cursor: pointer; }
+  .exp-item.active { opacity: 1; }
+  /* On desktop, always show full opacity — effect is for mobile scroll feel */
+  @media (min-width: 900px) {
+    .exp-item { opacity: 1; }
+  }
+  .exp-meta { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.9rem; }
   .exp-left { flex: 1; min-width: 0; }
   .exp-role { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
   .exp-company { font-size: 13px; color: var(--teal); }
   .exp-right { text-align: right; flex-shrink: 0; }
   .exp-date { font-size: 12px; color: var(--text-muted); }
   .exp-location { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-  .exp-toggle { font-size: 18px; color: var(--text-muted); margin-left: 8px; display: inline-block; }
-  .exp-body { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
-  .exp-body.open { max-height: 1000px; }
-  .exp-bullets { padding: 0 0 1.2rem; display: flex; flex-direction: column; gap: 8px; }
+  .exp-bullets { display: flex; flex-direction: column; gap: 8px; }
   .exp-bullets li { font-size: 13px; color: var(--text-muted); line-height: 1.65; padding-left: 1rem; position: relative; list-style: none; }
   .exp-bullets li::before { content: "—"; position: absolute; left: 0; color: var(--terra); }
 
   /* CAMPAIGN SNAPSHOT */
-  .snapshot { background: #fff; border: 0.5px solid var(--border); border-radius: 12px; padding: 1.2rem; margin: 0.8rem 0 1.2rem; }
+  .snapshot { background: #fff; border: 0.5px solid var(--border); border-radius: 12px; padding: 1.2rem; margin: 1rem 0 0; }
   .snapshot-header { font-size: 12px; font-weight: 500; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
   .snapshot-context { font-size: 12px; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5; }
   .snapshot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem; }
@@ -107,20 +113,24 @@
   .project-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; flex-shrink: 0; white-space: nowrap; }
   .badge-active { background: var(--teal-light); color: var(--teal); }
   .project-date { font-size: 12px; color: var(--text-muted); flex-shrink: 0; margin-top: 4px; white-space: nowrap; }
-  .project-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+  .project-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 0.9rem; }
+  .project-cta { display: inline-block; font-size: 12px; font-weight: 500; color: var(--teal); border: 1px solid var(--teal); padding: 5px 14px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+  .project-cta:hover { background: var(--teal-light); }
 
-  /* AI PROJECTS */
-  .ai-parent { background: #fff; border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; }
-  .ai-header { padding: 1.3rem; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; }
-  .ai-toggle { font-size: 18px; color: var(--text-muted); flex-shrink: 0; margin-left: 1rem; margin-top: 2px; }
-  .ai-body { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
-  .ai-body.open { max-height: 800px; }
-  .ai-sub-grid { padding: 0 1.3rem 1.3rem; display: flex; flex-direction: column; gap: 10px; }
-  .ai-sub { background: var(--off-white); border-radius: 8px; padding: 1rem 1.1rem; }
-  .ai-sub-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
-  .ai-sub-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 6px; }
-  .ai-sub-tag { font-size: 11px; color: var(--teal); }
-  .ai-divider { border-top: 0.5px solid var(--border); margin: 0 1.3rem; }
+  /* PERSONAL BUILDS */
+  .builds-parent { background: #fff; border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .builds-header { padding: 1.3rem; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; }
+  .builds-toggle { font-size: 18px; color: var(--text-muted); flex-shrink: 0; margin-left: 1rem; margin-top: 2px; }
+  .builds-body { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
+  .builds-body.open { max-height: 1000px; }
+  .builds-sub-grid { padding: 0 1.3rem 1.3rem; display: flex; flex-direction: column; gap: 10px; }
+  .builds-sub { background: var(--off-white); border-radius: 8px; padding: 1rem 1.1rem; }
+  .builds-sub-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .builds-sub-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px; }
+  .builds-sub-tag { font-size: 11px; color: var(--teal); margin-bottom: 8px; display: block; }
+  .builds-sub-cta { display: inline-block; font-size: 11px; font-weight: 500; color: var(--teal); border: 1px solid var(--teal); padding: 4px 12px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+  .builds-sub-cta:hover { background: var(--teal-light); }
+  .builds-divider { border-top: 0.5px solid var(--border); margin: 0 1.3rem; }
 
   /* SKILLS */
   .skills-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
@@ -181,25 +191,26 @@
     <p class="hero-sub">Incoming MSc graduate from BI Norwegian Business School with hands-on experience in social strategy, content creation, and community building — currently shaping the voice of Opera Neon, an AI agentic browser.</p>
     <div class="hero-cta">
       <a class="btn-secondary" href="https://www.linkedin.com/in/aadhilshahjahan/" target="_blank">LinkedIn</a>
+      <a class="btn-secondary" href="https://raw.githubusercontent.com/aadhilsj/ASJ-Portfolio/main/ASJ%20Perf%20Mark%20CV%202.pdf" target="_blank" download="Aadhil_Shah_Jahan_CV.pdf">Download CV</a>
     </div>
   </section>
 
   <section class="section" id="experience">
     <div class="section-label">career</div>
     <div class="section-title">Work experience</div>
+    <div class="exp-list">
 
-    <div class="exp-item">
-      <div class="exp-header" onclick="toggleExp(this)">
-        <div class="exp-left">
-          <div class="exp-role">Social & Community Strategy Intern <span class="exp-toggle">+</span></div>
-          <div class="exp-company">Opera Limited</div>
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-left">
+            <div class="exp-role">Social & Community Strategy Intern</div>
+            <div class="exp-company">Opera Limited</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-date">Aug 2025 – present</div>
+            <div class="exp-location">Oslo, Norway</div>
+          </div>
         </div>
-        <div class="exp-right">
-          <div class="exp-date">Aug 2025 – present</div>
-          <div class="exp-location">Oslo, Norway</div>
-        </div>
-      </div>
-      <div class="exp-body">
         <ul class="exp-bullets">
           <li>Own and grow Opera Neon's X (Twitter) account from launch — driving content direction, community engagement, and brand tone across the channel</li>
           <li>Drive Instagram growth through carousels and thought leadership content, scaling the account from 0 to 2.2K followers with posts averaging 70K+ views — top carousel at 130K views</li>
@@ -211,10 +222,10 @@
           <div class="snapshot-context">Live campaign launched last week, running until end of April. Numbers below reflect current early-stage performance — projections based on live content already published.</div>
           <div class="snapshot-grid">
             <div class="snap-stat"><div class="snap-num">500K–1M</div><div class="snap-label">Projected reach</div></div>
-            <div class="snap-stat"><div class="snap-num">359</div><div class="snap-label">Link clicks (so far)</div></div>
+            <div class="snap-stat"><div class="snap-num">450</div><div class="snap-label">Link clicks (so far)</div></div>
             <div class="snap-stat"><div class="snap-num">1,050</div><div class="snap-label">Saves (so far)</div></div>
             <div class="snap-stat"><div class="snap-num proj">2,500+</div><div class="snap-label">Projected saves</div></div>
-            <div class="snap-stat"><div class="snap-num">150</div><div class="snap-label">X followers gained</div></div>
+            <div class="snap-stat"><div class="snap-num">250</div><div class="snap-label">X followers gained</div></div>
           </div>
           <div class="snap-channels">
             <span class="snap-pill">X (Twitter)</span>
@@ -224,63 +235,58 @@
           <div class="snap-note">Early results only — campaign is ongoing. Final numbers expected end of April 2026.</div>
         </div>
       </div>
-    </div>
 
-    <div class="exp-item">
-      <div class="exp-header" onclick="toggleExp(this)">
-        <div class="exp-left">
-          <div class="exp-role">Restaurant Host <span class="exp-toggle">+</span></div>
-          <div class="exp-company">Khanateria</div>
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-left">
+            <div class="exp-role">Restaurant Host</div>
+            <div class="exp-company">Khanateria</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-date">Jun 2023 – Nov 2025</div>
+            <div class="exp-location">Oslo, Norway</div>
+          </div>
         </div>
-        <div class="exp-right">
-          <div class="exp-date">Jun 2023 – Nov 2025</div>
-          <div class="exp-location">Oslo, Norway</div>
-        </div>
-      </div>
-      <div class="exp-body">
         <ul class="exp-bullets">
           <li>Improved front-of-house efficiency through structured task delegation and team coordination</li>
           <li>Grew restaurant reservations by 28% through social media content creation and community engagement</li>
         </ul>
       </div>
-    </div>
 
-    <div class="exp-item">
-      <div class="exp-header" onclick="toggleExp(this)">
-        <div class="exp-left">
-          <div class="exp-role">Senior Waitstaff <span class="exp-toggle">+</span></div>
-          <div class="exp-company">Der Peppern Gror</div>
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-left">
+            <div class="exp-role">Senior Waitstaff</div>
+            <div class="exp-company">Der Peppern Gror</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-date">May 2022 – Jun 2023</div>
+            <div class="exp-location">Oslo, Norway</div>
+          </div>
         </div>
-        <div class="exp-right">
-          <div class="exp-date">May 2022 – Jun 2023</div>
-          <div class="exp-location">Oslo, Norway</div>
-        </div>
-      </div>
-      <div class="exp-body">
         <ul class="exp-bullets">
           <li>Senior waiter at Oslo's #1 ranked restaurant on TripAdvisor</li>
           <li>Delivered high-quality service in a high-pressure, fast-paced environment</li>
         </ul>
       </div>
-    </div>
 
-    <div class="exp-item">
-      <div class="exp-header" onclick="toggleExp(this)">
-        <div class="exp-left">
-          <div class="exp-role">Marketing Intern <span class="exp-toggle">+</span></div>
-          <div class="exp-company">Loops Digital</div>
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-left">
+            <div class="exp-role">Marketing Intern</div>
+            <div class="exp-company">Loops Digital</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-date">Sep 2019 – Dec 2019</div>
+            <div class="exp-location">Colombo, Sri Lanka</div>
+          </div>
         </div>
-        <div class="exp-right">
-          <div class="exp-date">Sep 2019 – Dec 2019</div>
-          <div class="exp-location">Colombo, Sri Lanka</div>
-        </div>
-      </div>
-      <div class="exp-body">
         <ul class="exp-bullets">
           <li>Conducted market and competitor research to inform campaign strategy</li>
           <li>Supported ad copy creation across digital channels</li>
         </ul>
       </div>
+
     </div>
   </section>
 
@@ -336,32 +342,38 @@
         <p class="project-desc">A sports culture community built around fantasy sports as an entry point into social connection. Grew organically from 6 friends to 45+ members across multiple countries — now evolving into a structured platform with events, partnerships, and a monetisation model.</p>
       </div>
 
-      <div class="ai-parent">
-        <div class="ai-header" onclick="toggleAI(this)">
+      <div class="builds-parent">
+        <div class="builds-header" onclick="toggleBuilds(this)">
           <div style="flex:1;">
-            <div class="project-name" style="margin-bottom: 0.5rem;">AI Prototype Projects</div>
-            <p class="project-desc" style="margin-bottom: 0;">Three tools built to solve real problems — habit tracking, performance analysis, and competitive dashboards.</p>
+            <div class="project-name" style="margin-bottom: 0.5rem;">Personal Builds</div>
+            <p style="font-size:13px; color:var(--text-muted); line-height:1.65; margin-bottom:0;">A set of apps built to solve real problems — productivity, personal finance, and fitness.</p>
           </div>
-          <div class="ai-toggle">+</div>
+          <div class="builds-toggle">+</div>
         </div>
-        <div class="ai-divider"></div>
-        <div class="ai-body">
-          <div class="ai-sub-grid">
-            <div class="ai-sub">
-              <div class="ai-sub-name">Lift Log</div>
-              <div class="ai-sub-desc">A fitness accountability tracker built to help users log workouts and stay consistent. Focus: habit tracking, simplicity, and daily usability.</div>
-              <div class="ai-sub-tag">Habit tracking · Fitness</div>
+        <div class="builds-divider"></div>
+        <div class="builds-body">
+          <div class="builds-sub-grid">
+
+            <div class="builds-sub">
+              <div class="builds-sub-name">Kairo</div>
+              <div class="builds-sub-desc">A personal life OS built to track goals, habits, and daily focus in one place. Designed around the idea of a proactive decision-making assistant — not just a dashboard, but a system that surfaces what matters most.</div>
+              <span class="builds-sub-tag">Productivity · Life OS · Supabase</span>
+              <a class="builds-sub-cta" href="https://kairo-los.vercel.app" target="_blank">Try it →</a>
             </div>
-            <div class="ai-sub">
-              <div class="ai-sub-name">FIFA Stats System</div>
-              <div class="ai-sub-desc">A custom stat tracking system for competitive FIFA sessions. Tracks player performance, results, and comparative stats across sessions.</div>
-              <div class="ai-sub-tag">Performance tracking · Data</div>
+
+            <div class="builds-sub">
+              <div class="builds-sub-name">Runway</div>
+              <div class="builds-sub-desc">A cashflow forecasting app that shows what your balance will look like in the future — not where your money went. Built for speed and clarity: log an entry in under 5 seconds and instantly see how it affects your projected balance.</div>
+              <span class="builds-sub-tag">Personal finance · Cashflow · Supabase</span>
+              <a class="builds-sub-cta" href="https://runway-xi.vercel.app" target="_blank">Try it →</a>
             </div>
-            <div class="ai-sub">
-              <div class="ai-sub-name">Rivalry Dashboard</div>
-              <div class="ai-sub-desc">A head-to-head performance dashboard that visualises matchups between players and tracks long-term rivalry outcomes over time.</div>
-              <div class="ai-sub-tag">Data viz · Competitive</div>
+
+            <div class="builds-sub">
+              <div class="builds-sub-name">Lift Log</div>
+              <div class="builds-sub-desc">A fitness accountability tracker built to help users log workouts and stay consistent. Focus: habit tracking, simplicity, and daily usability.</div>
+              <span class="builds-sub-tag">Habit tracking · Fitness</span>
             </div>
+
           </div>
         </div>
       </div>
@@ -428,24 +440,15 @@
         </div>
         <div class="bball-entries">
           <div class="bball-row">
-            <div class="bball-left">
-              <span class="bball-name">OSI Basketball Club</span>
-              <span class="bball-loc">Oslo, Norway</span>
-            </div>
+            <div class="bball-left"><span class="bball-name">OSI Basketball Club</span><span class="bball-loc">Oslo, Norway</span></div>
             <span class="bball-date">2025 – present</span>
           </div>
           <div class="bball-row">
-            <div class="bball-left">
-              <span class="bball-name">BI Norwegian Business School</span>
-              <span class="bball-loc">Oslo, Norway</span>
-            </div>
+            <div class="bball-left"><span class="bball-name">BI Norwegian Business School</span><span class="bball-loc">Oslo, Norway</span></div>
             <span class="bball-date">2024 – 2025</span>
           </div>
           <div class="bball-row">
-            <div class="bball-left">
-              <span class="bball-name">Colombo International School</span>
-              <span class="bball-loc">Colombo, Sri Lanka</span>
-            </div>
+            <div class="bball-left"><span class="bball-name">Colombo International School</span><span class="bball-loc">Colombo, Sri Lanka</span></div>
             <span class="bball-date">2014 – 2019</span>
           </div>
         </div>
@@ -521,26 +524,53 @@
 </div>
 
 <script>
-function scrollToSection(id) {
-  var el = document.getElementById(id);
-  if (el) { el.scrollIntoView({ behavior: 'smooth' }); }
-}
-function toggleExp(header) {
-  var item = header.parentElement;
-  var body = item.querySelector('.exp-body');
-  var toggle = header.querySelector('.exp-toggle');
-  var isOpen = body.classList.contains('open');
-  document.querySelectorAll('.exp-body.open').forEach(function(b) { b.classList.remove('open'); });
-  document.querySelectorAll('.exp-toggle').forEach(function(t) { t.textContent = '+'; });
-  if (!isOpen) { body.classList.add('open'); toggle.textContent = '–'; }
-}
-function toggleAI(header) {
-  var body = header.nextElementSibling.nextElementSibling;
-  var toggle = header.querySelector('.ai-toggle');
-  var isOpen = body.classList.contains('open');
-  body.classList.toggle('open');
-  toggle.textContent = isOpen ? '+' : '–';
-}
+  // Smooth scroll nav
+  function scrollToSection(id) {
+    var el = document.getElementById(id);
+    if (el) { el.scrollIntoView({ behavior: 'smooth' }); }
+  }
+
+  // Scroll-highlight for experience items (mobile/tablet only)
+  function initScrollHighlight() {
+    if (window.innerWidth >= 900) return;
+    var items = document.querySelectorAll('.exp-item');
+    if (!items.length) return;
+
+    // Set first item active on load
+    items[0].classList.add('active');
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          items.forEach(function(i) { i.classList.remove('active'); });
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '-25% 0px -50% 0px',
+      threshold: 0
+    });
+
+    items.forEach(function(item) { observer.observe(item); });
+  }
+
+  // Personal Builds toggle
+  function toggleBuilds(header) {
+    var body = header.nextElementSibling.nextElementSibling;
+    var toggle = header.querySelector('.builds-toggle');
+    var isOpen = body.classList.contains('open');
+    body.classList.toggle('open');
+    toggle.textContent = isOpen ? '+' : '–';
+  }
+
+  document.addEventListener('DOMContentLoaded', initScrollHighlight);
+  window.addEventListener('resize', function() {
+    var items = document.querySelectorAll('.exp-item');
+    if (window.innerWidth >= 900) {
+      items.forEach(function(i) { i.style.opacity = '1'; });
+    }
+  });
 </script>
 </body>
 </html>
